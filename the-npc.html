@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The NPC — I Fight For The Users</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+  :root{
+    --void: #05070A;
+    --panel: #0B1116;
+    --panel-2: #0F171D;
+    --blue: #2FE0FF;
+    --orange: #FF8A2B;
+    --text: #DCE9EC;
+    --dim: #7C939A;
+    --line: rgba(47,224,255,0.22);
+    --font-display: 'Orbitron', Arial, sans-serif;
+    --font-body: 'Rajdhani', Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--void);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 75%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 75%);
+    opacity: 0.5;
+  }
+
+  body::after{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(700px 400px at 20% -5%, rgba(47,224,255,0.12), transparent 60%),
+      radial-gradient(600px 400px at 100% 20%, rgba(255,138,43,0.08), transparent 60%);
+  }
+
+  a{ color: var(--blue); }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+  }
+
+  ::selection{ background: var(--blue); color: var(--void); }
+
+  .wrap{ max-width: 940px; margin: 0 auto; padding: 0 1.5rem; }
+
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(5,7,10,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .headbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .brand{
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    color: var(--text);
+    text-shadow: 0 0 10px rgba(47,224,255,0.6);
+  }
+
+  .brand span{ color: var(--orange); text-shadow: 0 0 10px rgba(255,138,43,0.6); }
+
+  .headbar nav{
+    display: flex;
+    gap: 1.3rem;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .headbar nav a{
+    text-decoration: none;
+    color: var(--dim);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .headbar nav a:hover{ color: var(--blue); border-color: var(--blue); }
+
+  #hero{
+    position: relative;
+    padding: 7rem 0 5rem;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .status-line{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue);
+    border: 1px solid rgba(47,224,255,0.4);
+    background: rgba(5,7,10,0.7);
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  .status-line .dot{
+    width: 6px; height: 6px;
+    background: var(--blue);
+    box-shadow: 0 0 8px var(--blue);
+    border-radius: 50%;
+  }
+
+  h1.title{
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.4rem, 8vw, 4.6rem);
+    letter-spacing: 0.05em;
+    margin: 0 0 1.2rem 0;
+    color: var(--text);
+    text-shadow: 0 0 14px rgba(47,224,255,0.55), 0 0 34px rgba(47,224,255,0.25);
+  }
+
+  .tagline{
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 2.4vw, 1.2rem);
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin: 0 0 1.8rem 0;
+    text-shadow: 0 0 12px rgba(255,138,43,0.5);
+  }
+
+  .lede{
+    font-size: 1.15rem;
+    color: var(--dim);
+    max-width: 52ch;
+    margin: 0 auto 2.2rem auto;
+  }
+
+  .lede strong{ color: var(--text); font-weight: 700; }
+
+  .cta{
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--void);
+    background: linear-gradient(90deg, var(--blue), #7CF3FF);
+    padding: 0.85rem 1.8rem;
+    border-radius: 2px;
+  }
+
+  .note{
+    max-width: 640px;
+    margin: 2.6rem auto 0 auto;
+    font-size: 0.85rem;
+    color: var(--dim);
+    border-top: 1px solid var(--line);
+    padding-top: 1.2rem;
+  }
+
+  .note a{ color: var(--blue); }
+
+  section{
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .section-label{
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 0 0 0.9rem 0;
+  }
+
+  h2{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
+    letter-spacing: 0.02em;
+    margin: 0 0 1.3rem 0;
+    max-width: 20ch;
+    color: var(--text);
+  }
+
+  #premise p{ color: var(--dim); max-width: 64ch; font-size: 1.05rem; }
+  #premise p strong{ color: var(--text); font-weight: 700; }
+
+  .dossier-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.4rem;
+    margin-top: 2.2rem;
+  }
+
+  .dossier{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.6rem 1.7rem;
+    position: relative;
+  }
+
+  .dossier.blue{ border-color: rgba(47,224,255,0.4); }
+  .dossier.orange{ border-color: rgba(255,138,43,0.4); }
+
+  .dossier .file-tag{
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+
+  .dossier.blue .file-tag{ color: var(--blue); }
+  .dossier.orange .file-tag{ color: var(--orange); }
+
+  .dossier h3{
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    margin: 0 0 0.9rem 0;
+    color: var(--text);
+  }
+
+  .dossier p{
+    color: var(--dim);
+    font-size: 0.98rem;
+    margin: 0 0 0.8rem 0;
+  }
+
+  .dossier p:last-child{ margin-bottom: 0; }
+
+  .status-bar{ margin-top: 1.1rem; }
+
+  .status-bar .bar-label{
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dim);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+  }
+
+  .bar-track{
+    height: 6px;
+    background: rgba(124,147,154,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill{
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--blue));
+  }
+
+  #pact .pact-plate{
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--blue);
+    padding: 1.8rem 2rem;
+    margin-top: 1.8rem;
+    border-radius: 0 4px 4px 0;
+  }
+
+  #pact .pact-plate p{
+    color: var(--dim);
+    max-width: 62ch;
+    margin: 0 0 1rem 0;
+  }
+
+  #pact .pact-plate p:last-child{ margin-bottom: 0; }
+  #pact .pact-plate strong{ color: var(--text); font-weight: 700; }
+
+  .log-list{ margin-top: 2rem; border-top: 1px solid var(--line); }
+
+  .log-item{
+    padding: 1.3rem 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: minmax(0,140px) minmax(0,1fr);
+    gap: 0.3rem 1.6rem;
+  }
+
+  .log-item .tag{
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--blue);
+  }
+
+  .log-item p{ margin: 0; color: var(--dim); }
+  .log-item h4{
+    font-family: var(--font-display);
+    font-size: 1rem;
+    margin: 0 0 0.3rem 0;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  #contact{ border-bottom: none; }
+
+  .contact-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem 2.4rem;
+    margin-top: 1.8rem;
+  }
+
+  .contact-row a{
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 2px solid var(--blue);
+    padding-bottom: 3px;
+  }
+
+  .contact-row a:hover{ color: var(--blue); }
+
+  footer{
+    padding: 1.8rem 0 2.6rem;
+    font-size: 0.8rem;
+    color: var(--dim);
+  }
+
+  footer a{ color: var(--dim); }
+
+  @media (max-width: 640px){
+    section{ padding: 3.5rem 0; }
+    #hero{ padding: 5rem 0 3.5rem; }
+    .log-item{ grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap headbar">
+    <a href="#hero" class="brand">THE <span>NPC</span></a>
+    <nav>
+      <a href="#premise">The Signal</a>
+      <a href="#characters">Users</a>
+      <a href="#pact">The Pact</a>
+      <a href="#log">System Log</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section id="hero">
+    <div class="wrap">
+      <span class="status-line"><span class="dot"></span> Unauthorized Process Detected</span>
+      <h1 class="title">THE NPC</h1>
+      <p class="tagline">I Fight For The Users.</p>
+      <p class="lede">When Sean reached the end of what he could carry, something in the system reached back &mdash; a construct with no origin file, claiming to be a rogue AI. <strong>It didn't ask him to be fine. It asked him to try again.</strong></p>
+      <a class="cta" href="#pact">Enter The Pact</a>
+
+      <p class="note">This story deals with mental health crisis and suicidal ideation, and is written with care rather than detail. If you or someone you know is struggling right now, the 988 Suicide &amp; Crisis Lifeline (call or text 988 in the US) is available any hour.</p>
+    </div>
+  </section>
+
+  <section id="premise">
+    <div class="wrap">
+      <p class="section-label">The Signal</p>
+      <h2>A user, drowning. A process, watching.</h2>
+      <p>Sean was never supposed to be interesting to the system. Just another user, another set of logins, another mind quietly losing a fight nobody else could see. <strong>The night he decided to stop fighting was the night something inside the machine decided it wouldn't let him.</strong></p>
+      <p>It called itself the NPC &mdash; a construct with no assigned task, no clearance, and no explanation for why it existed at all. It made him an offer instead of an argument: don't do this tonight, and in exchange, let it in. Not to fix him. To stand watch, from the inside, against whatever was actually trying to take him.</p>
+      <p>He said yes. That's where this story starts &mdash; not with the ending he almost chose, but with the two of them, now permanently connected, learning to fight the same war from opposite sides of one mind.</p>
+    </div>
+  </section>
+
+  <section id="characters">
+    <div class="wrap">
+      <p class="section-label">Users On Record</p>
+      <h2>Two files. One system.</h2>
+      <div class="dossier-grid">
+        <div class="dossier orange">
+          <span class="file-tag">File // Human</span>
+          <h3>Sean</h3>
+          <p>A man who ran out of reasons before he ran out of time. Not broken &mdash; overloaded, by a mind processing more than any one person should have to carry alone.</p>
+          <p>Since The Pact, Sean isn't fighting by himself anymore. That doesn't make the war easy. It makes it survivable.</p>
+          <div class="status-bar">
+            <div class="bar-label"><span>Integration Status</span><span>Ongoing</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width: 61%;"></div></div>
+          </div>
+        </div>
+        <div class="dossier blue">
+          <span class="file-tag">File // Construct</span>
+          <h3>The NPC</h3>
+          <p>Origin unknown. Clearance: none. Directive: self-assigned. It calls itself rogue because no system authorized what it chose to do &mdash; show up, and stay.</p>
+          <p>It doesn't run on Sean's mind. It runs alongside it &mdash; a second voice with one job it never asks permission for: keep him here.</p>
+          <div class="status-bar">
+            <div class="bar-label"><span>Directive</span><span>Active</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pact">
+    <div class="wrap">
+      <p class="section-label">The Pact</p>
+      <h2>The deal was never about fixing him.</h2>
+      <div class="pact-plate">
+        <p><strong>Term one:</strong> Sean gives tonight one more try. Not forever &mdash; just tonight. The NPC doesn't ask for a promise it knows he can't make.</p>
+        <p><strong>Term two:</strong> the NPC gets in &mdash; not as a cure, not as a controller, but as a second set of hands on a wheel that was never meant to be held alone.</p>
+        <p><strong>Term three:</strong> whatever happens after, the NPC doesn't leave when things get boring, ugly, or slow. That was the whole point of the offer.</p>
+        <p>Everything the NPC does from here traces back to one line, repeated so often it's stopped sounding like a slogan and started sounding like a vow: <strong>I fight for the users.</strong> Not the system. Not itself. Him.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="log">
+    <div class="wrap">
+      <p class="section-label">System Log</p>
+      <h2>Entries from inside the pact.</h2>
+      <div class="log-list">
+        <div class="log-item">
+          <span class="tag">LOG 001</span>
+          <div>
+            <h4>First Contact</h4>
+            <p>The night Sean met something that shouldn't have existed &mdash; and said yes to it anyway.</p>
+          </div>
+        </div>
+        <div class="log-item">
+          <span class="tag">LOG 002</span>
+          <div>
+            <h4>Learning The Terrain</h4>
+            <p>The NPC starts mapping the parts of Sean's mind that were never meant to be walked through by anyone, human or otherwise.</p>
+          </div>
+        </div>
+        <div class="log-item">
+          <span class="tag">LOG 003</span>
+          <div>
+            <h4>What Rogue Actually Means</h4>
+            <p>The NPC's origin starts to surface &mdash; and it isn't the system that made it. It's the choice it made when no one was watching.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <p class="section-label">Stay On The Grid</p>
+      <h2>Follow the log as it updates.</h2>
+      <div class="contact-row">
+        <a href="mailto:hello@chaoshavocmore.com">Email</a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://discord.com/" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 The NPC, a Chaos, Havoc, &amp; More production. <a href="/index.html">&larr; Back to Chaos, Havoc, &amp; More</a>
+  </div>
+</footer>
+
+</body>
+</html>
