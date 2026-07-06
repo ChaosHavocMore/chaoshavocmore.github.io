@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surfing the Abyss — Mind Is A Spectrum</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+  :root{
+    --void: #0B0417;
+    --panel: #160B29;
+    --panel-2: #1E1038;
+    --violet: #9D5CFF;
+    --magenta: #D65CFF;
+    --star: #F3EEFF;
+    --dim: #B3A6D6;
+    --line: rgba(157,92,255,0.3);
+    --font-display: 'Bangers', Impact, fantasy;
+    --font-body: 'Work Sans', Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--void);
+    color: var(--star);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* cosmic backdrop: stars + nebula blobs, fixed behind everything */
+  body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1px 1px at 68% 8%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 30% 62%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 50% 85%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 92% 75%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 5% 90%, rgba(255,255,255,0.6), transparent),
+      var(--void);
+    background-repeat: repeat;
+    background-size: 400px 400px;
+  }
+
+  body::after{
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(600px 500px at 15% 0%, rgba(157,92,255,0.25), transparent 60%),
+      radial-gradient(500px 450px at 90% 30%, rgba(214,92,255,0.18), transparent 60%),
+      radial-gradient(700px 600px at 40% 100%, rgba(157,92,255,0.15), transparent 65%);
+  }
+
+  a{ color: var(--magenta); }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--magenta);
+    outline-offset: 3px;
+  }
+
+  ::selection{ background: var(--violet); color: var(--void); }
+
+  .wrap{ max-width: 940px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* HEADER */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(11,4,23,0.85);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .headbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .brand{
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--star);
+    text-shadow: 2px 2px 0 var(--violet);
+  }
+
+  .headbar nav{
+    display: flex;
+    gap: 1.3rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .headbar nav a{
+    text-decoration: none;
+    color: var(--dim);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .headbar nav a:hover{ color: var(--magenta); border-color: var(--magenta); }
+
+  /* halftone corner accent, reused as comic texture */
+  .halftone{
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    background-image: radial-gradient(circle, var(--violet) 1.6px, transparent 1.6px);
+    background-size: 10px 10px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* HERO */
+  #hero{
+    position: relative;
+    padding: 7rem 0 6rem;
+    border-bottom: 2px solid var(--line);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  #hero .halftone{ top: -20px; right: -20px; }
+
+  .kicker{
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    color: var(--magenta);
+    border: 2px solid var(--magenta);
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.6rem;
+    background: rgba(11,4,23,0.7);
+  }
+
+  h1.title{
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    line-height: 1.08;
+    margin: 0 0 1.3rem 0;
+    color: var(--star);
+    text-shadow: 3px 3px 0 var(--violet), 6px 6px 0 rgba(11,4,23,0.6);
+    max-width: 18ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lede{
+    font-size: 1.1rem;
+    color: var(--dim);
+    max-width: 52ch;
+    margin: 0 auto 2rem auto;
+  }
+
+  .lede strong{ color: var(--star); }
+
+  .cta-row{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta{
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--void);
+    background: linear-gradient(90deg, var(--violet), var(--magenta));
+    padding: 0.8rem 1.7rem;
+    border-radius: 6px;
+  }
+
+  .cta.secondary{
+    background: transparent;
+    color: var(--star);
+    border: 2px solid var(--violet);
+  }
+
+  /* SECTIONS shared */
+  section{
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .section-label{
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    color: var(--magenta);
+    margin: 0 0 0.8rem 0;
+  }
+
+  h2{
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+    margin: 0 0 1.3rem 0;
+    max-width: 20ch;
+    color: var(--star);
+  }
+
+  /* MISSION */
+  #mission p{ color: var(--dim); max-width: 64ch; }
+  #mission p strong{ color: var(--star); }
+
+  /* BELIEFS — comic speech bubbles */
+  .bubble-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.8rem 1.6rem;
+    margin-top: 2.2rem;
+  }
+
+  .bubble{
+    position: relative;
+    background: var(--panel);
+    border: 2px solid var(--violet);
+    border-radius: 18px;
+    padding: 1.4rem 1.5rem 1.6rem;
+  }
+
+  .bubble::after{
+    content: "";
+    position: absolute;
+    bottom: -14px;
+    left: 32px;
+    width: 24px;
+    height: 24px;
+    background: var(--panel);
+    border-right: 2px solid var(--violet);
+    border-bottom: 2px solid var(--violet);
+    transform: rotate(45deg);
+    border-radius: 0 0 4px 0;
+  }
+
+  .bubble p{
+    margin: 0;
+    font-size: 1rem;
+    color: var(--star);
+    font-weight: 500;
+  }
+
+  .bubble .mark{
+    font-family: var(--font-display);
+    color: var(--magenta);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* FIELD REPORT */
+  #field .report-list{
+    margin-top: 2rem;
+    border-top: 2px solid var(--line);
+  }
+
+  .report-item{
+    padding: 1.4rem 0;
+    border-bottom: 2px solid var(--line);
+    display: grid;
+    grid-template-columns: minmax(0,120px) minmax(0,1fr);
+    gap: 0.4rem 1.6rem;
+  }
+
+  .report-item .tag{
+    font-family: var(--font-display);
+    color: var(--violet);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .report-item p{
+    margin: 0;
+    color: var(--dim);
+  }
+
+  .further{
+    margin-top: 2rem;
+    font-size: 0.92rem;
+    color: var(--dim);
+  }
+
+  /* COMMUNITY / CARE NOTE */
+  #community .care-note{
+    background: var(--panel-2);
+    border-left: 4px solid var(--magenta);
+    border-radius: 0 12px 12px 0;
+    padding: 1.3rem 1.5rem;
+    margin-top: 2rem;
+    color: var(--dim);
+    font-size: 0.95rem;
+  }
+
+  .care-note strong{ color: var(--star); }
+
+  /* CONTACT */
+  #contact{ border-bottom: none; }
+
+  .contact-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem 2.4rem;
+    margin-top: 1.8rem;
+  }
+
+  .contact-row a{
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    text-decoration: none;
+    color: var(--star);
+    border-bottom: 2px solid var(--magenta);
+    padding-bottom: 3px;
+  }
+
+  .contact-row a:hover{ color: var(--magenta); }
+
+  footer{
+    padding: 1.8rem 0 2.6rem;
+    font-size: 0.8rem;
+    color: var(--dim);
+    position: relative;
+  }
+
+  footer a{ color: var(--dim); }
+
+  @media (max-width: 640px){
+    section{ padding: 3.5rem 0; }
+    #hero{ padding: 5rem 0 4rem; }
+    .report-item{ grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap headbar">
+    <a href="#hero" class="brand">Surfing the Abyss</a>
+    <nav>
+      <a href="#mission">Mission</a>
+      <a href="#beliefs">Beliefs</a>
+      <a href="#field">Field Report</a>
+      <a href="#community">Community</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section id="hero">
+    <div class="halftone" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="kicker">Issue 001 &middot; The Mind, Uncensored</span>
+      <h1 class="title">The Mind Is A Spectrum, Not A Switch.</h1>
+      <p class="lede">We hold space for people living with mental health issues &mdash; and we start from a simple premise: <strong>a brain is not broken just because a society refuses to change.</strong></p>
+      <div class="cta-row">
+        <a class="cta" href="#beliefs">Read What We Believe</a>
+        <a class="cta secondary" href="#community">Join The Community</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="mission">
+    <div class="wrap">
+      <p class="section-label">Mission</p>
+      <h2>Hold space. Question the story. Follow the data.</h2>
+      <p>Surfing the Abyss exists for people navigating anxiety, depression, and every diagnosis in between &mdash; and for anyone who has ever been told there's something wrong with their brain, full stop, end of conversation. We think that conversation is nowhere near finished.</p>
+      <p><strong>We are not neurotypical and neurodivergent. We are neurodiverse</strong> &mdash; one long, wide, human spectrum with no single correct way to think, feel, or process the world. Every mind on it deserves care, not a category.</p>
+      <p>We also think a lot of what gets filed as "disorder" is a nervous system doing exactly what it evolved to do: responding, hard, to conditions that were never survivable to begin with. That doesn't mean biology is irrelevant. It means biology was never the whole story &mdash; and treating it like the whole story has cost people decades of their lives.</p>
+    </div>
+  </section>
+
+  <section id="beliefs">
+    <div class="halftone" aria-hidden="true" style="top: 10%; left: -60px; opacity: 0.2;"></div>
+    <div class="wrap">
+      <p class="section-label">Beliefs</p>
+      <h2>What we hold steady, in public, on purpose.</h2>
+      <div class="bubble-grid">
+        <div class="bubble">
+          <span class="mark">01</span>
+          <p>General neurodiversity is real. Not "neurotypical vs. neurodivergent" &mdash; a spectrum, not a binary switch.</p>
+        </div>
+        <div class="bubble">
+          <span class="mark">02</span>
+          <p>Large parts of the DSM-V may describe a sane reaction to an unsane society &mdash; and call it a personal defect instead.</p>
+        </div>
+        <div class="bubble">
+          <span class="mark">03</span>
+          <p>"Chemical imbalance" is a theory, not a settled fact. Biology explains a piece of the story. It was never the whole book.</p>
+        </div>
+        <div class="bubble">
+          <span class="mark">04</span>
+          <p>Anxiety and depression can be adaptive responses to real adversity &mdash; not proof that something inside you is malfunctioning.</p>
+        </div>
+        <div class="bubble">
+          <span class="mark">05</span>
+          <p>A diagnosis can be a map worth having. It was never meant to be a cage you live in forever.</p>
+        </div>
+        <div class="bubble">
+          <span class="mark">06</span>
+          <p>Healing includes context &mdash; environment, history, community, and safety &mdash; not a prescription pad alone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="field">
+    <div class="wrap">
+      <p class="section-label">Field Report</p>
+      <h2>The data doesn't say what we were told it says.</h2>
+      <p>Researchers across anthropology, psychology, and evolutionary biology have spent decades pushing back on purely biological explanations of mental health &mdash; and their case is stronger than the marketing ever let on.</p>
+
+      <div class="report-list">
+        <div class="report-item">
+          <span class="tag">Mismatch</span>
+          <p>A lot of modern distress looks less like a broken brain and more like an ancient nervous system meeting a world it never evolved for.</p>
+        </div>
+        <div class="report-item">
+          <span class="tag">Incentives</span>
+          <p>The industries built around a single biological story have real financial reasons to keep that story simple &mdash; and unquestioned.</p>
+        </div>
+        <div class="report-item">
+          <span class="tag">Stigma</span>
+          <p>Framing distress as purely biological hasn't reliably reduced stigma. Some research suggests it can quietly make things worse.</p>
+        </div>
+        <div class="report-item">
+          <span class="tag">Context</span>
+          <p>Diet, movement, economic security, and belonging all move the needle on mental health &mdash; alongside anything a prescription can do.</p>
+        </div>
+      </div>
+
+      <p class="further">Further reading: this section draws on the ongoing debate covered in <a href="https://bigthink.com/health/mental-health-chemical-imbalance/" target="_blank" rel="noopener">Big Think's reporting on the chemical imbalance theory</a>, among other sources we'll keep adding here.</p>
+    </div>
+  </section>
+
+  <section id="community">
+    <div class="wrap">
+      <p class="section-label">Community</p>
+      <h2>A place to land, not a place to perform wellness.</h2>
+      <p style="color: var(--dim); max-width: 62ch;">We run a space for people to talk about what's actually going on &mdash; without having to first prove they deserve support. No toxic positivity, no forced silver linings, no pressure to be "healed" on a schedule.</p>
+
+      <div class="care-note">
+        <strong>One honest note:</strong> this community is a place to feel less alone and think critically about the systems around mental health &mdash; it isn't a replacement for a therapist, doctor, or crisis line. If you're in crisis, please reach out to a local emergency service or crisis line first. We'll be here after.
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <p class="section-label">Get In Touch</p>
+      <h2>Tell us where you are on the spectrum.</h2>
+      <div class="contact-row">
+        <a href="mailto:hello@chaoshavocmore.com">Email</a>
+        <a href="https://discord.com/" target="_blank" rel="noopener">Discord</a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 Surfing the Abyss, a Chaos, Havoc, &amp; More production. <a href="/index.html">&larr; Back to Chaos, Havoc, &amp; More</a>
+  </div>
+</footer>
+
+</body>
+</html>
